@@ -1,0 +1,50 @@
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+  <script src="/scripts/app.js"></script>
+  <script src="/scripts/realms.js" async></script>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+{{#simData}}
+  {{#isUS}}<script>document.region = 'us'</script>{{/isUS}}
+  {{#isEU}}<script>document.region = 'eu'</script>{{/isEU}}
+{{/simData}}
+{{^simData}}
+  <script>document.region = 'us'</script>
+{{/simData}}
+<body onload="onLoad();">
+  <div class="app">
+    <div class="titleHeader">
+    WTF IS MY DPS?
+    </div>
+    <div class="inputWrapper">
+      <div class="charInputWrapper">
+        <input id="characterInput" class="charInput" placeholder="Character" value="{{#simData}}{{characterName}}{{/simData}}" required/>
+      </div>
+      <div class="realmInputWrapper">
+        <input id="realmInput" class="mainInput" onfocus="realmInputFocus();" placeholder="Realm" value="{{#simData}}{{realmName}}{{/simData}}" required/>
+        <div id="realmInputDropDown"></div>
+      </div>
+    </div>
+    <div class="regionSelect">
+      <div id="us" class="usItem {{#simData}}{{#isUS}}selected{{/isUS}}{{/simData}}{{^simData}}selected{{/simData}}" onclick="clickUs();">
+        US
+      </div><div id="eu" class="euItem {{#simData}}{{#isEU}}selected{{/isEU}}{{/simData}}" onclick="clickEu();">
+        EU
+      </div>
+    </div>
+    <div class="submitWrapper">
+      <div id="submitButton" class="submitButton">
+        Tell Me
+      </div>
+    </div>
+
+    {{#simData}}
+    <div>
+      <div class="dps">
+        {{dpsClean}} <span class="dpsText">DPS</span>
+      </div>
+    </div>
+    {{/simData}}
+
+  </div>
+</body>

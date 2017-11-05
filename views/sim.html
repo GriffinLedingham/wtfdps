@@ -1,0 +1,26 @@
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+  <div class="sim">
+    <div class="simTitle">
+      My DPS is...
+    </div>
+    <div>
+      {{#simData}}
+      <div>
+        <div class="dpsSim">
+          <div class="dpsNum">
+            {{dpsClean}}
+          </div>
+          <div class="dpsSubText">
+            <div class="dpsText">DPS</div>
+            <div class="dpsPlusMin">(+/- 1.5%)</div>
+          </div>
+        </div>
+      </div>
+      {{/simData}}
+    </div>
+  </div>
+</body>
