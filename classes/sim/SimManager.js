@@ -2,7 +2,8 @@ const cmd       = require( 'node-cmd' )
 const Promise   = require( 'bluebird' )
 const path      = require( 'path' )
 const getAsync  = Promise.promisify(cmd.get, { multiArgs: true, context: cmd })
-const unlink    = Promise.promisify(require("fs").unlink);
+const unlink    = Promise.promisify(require("fs").unlink)
+const spells    = require( '../../data/spells.json')
 
 
 module.exports = (() => {
@@ -36,10 +37,44 @@ module.exports = (() => {
   this.formatSimData = (data) => {
     let returnData = {
       dps:        Math.round(data.sim.statistics.raid_dps.mean),
-      dpsClean:   kFormatter(Math.round(data.sim.statistics.raid_dps.mean))
+      dpsClean:   kFormatter(Math.round(data.sim.statistics.raid_dps.mean)),
+      gear:       this.formatGear(data.sim.players[0].gear),
+      talents:    this.formatTalents(data.sim.players[0].talents),
+      opener:     this.formatOpener(data.sim.players[0].collected_data.action_sequence)
     }
 
     return returnData
+  }
+
+  this.formatOpener = (data) => {
+    let returnActions = []
+    let actions = data.slice(0,10)
+    for (let [key, value] of entries(actions)) {
+      let openerItem = {spell: value.name.replace(/_/g, ' ')}
+      let spell_id = spells[openerItem.spell]
+      if(spell_id) openerItem.spell_num = spell_id
+      if(key == actions.length-1) {
+        openerItem.last = true
+      }
+      returnActions.push(openerItem)
+    }
+    return returnActions
+  }
+
+  this.formatTalents = (data) => {
+    let talentArray = []
+    for (let [key, value] of entries(data)) {
+      talentArray.push({spell_id:value.spell_id, id: key})
+    }
+    return talentArray
+  }
+
+  this.formatGear = (data) => {
+    let gearArray = []
+    for (let [key, value] of entries(data)) {
+      gearArray.push({data:value.encoded_item, id: key})
+    }
+    return gearArray
   }
 
   return this

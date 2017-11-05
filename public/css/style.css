@@ -190,13 +190,15 @@ body {
 }
 
 .dpsSim {
-text-align: center;
+  text-align: center;
 }
 
 .sim {
   height: 100%;
   width: 100%;
   padding-top: 50px;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .dpsNum {
@@ -220,4 +222,97 @@ text-align: center;
   font-size: 20px;
   font-family: 'Roboto Condensed';
   color:white;
+}
+
+.gearItemThumb {
+
+}
+
+.gearItemThumb img {
+  width:30px;
+  border-radius: 6px;
+  border:1px solid black;
+  box-shadow: inset 0 0 5px 2px white;
+}
+
+.gearItem, .talentItem {
+  display: inline-block;
+  position: relative;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.gearItemTooltip, .talentItemTooltip {
+  display:none;
+  position: absolute;
+  top: 40px;
+  left:0;
+  text-align: left;
+  z-index: 2;
+}
+
+.gearItemTooltip.show, .talentItemTooltip.show {
+  display:block;
+}
+
+.itemThumbWrapper {
+  display:inline-block;position: relative;
+}
+
+.itemThumbWrapperGloss {
+  box-shadow: inset 0 0 5px 2px black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 6px;
+  border: 1px solid black;
+}
+
+.gearTitle {
+  font-size: 36px;
+  color: white;
+  font-family: 'Roboto Condensed';
+  text-align: center;
+  margin-top: 66px;
+  margin-bottom: 30px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 6px;
+  border: 1px solid #131313;display: inline-block;
+  padding: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+
+}
+
+.gearWrapper {
+  text-align: center;
+}
+
+.rotationItem {
+  font-size: 16px;
+  color: white;
+  font-family: 'Roboto Condensed';
+  text-transform: capitalize;
+}
+
+.rotationString {
+  text-align: center;
+  max-width: 600px;
+
+  display: inline-block;
+
+}
+
+.rotationWrapper {
+  text-align: center;
+}
+
+.rotationArrow {
+  color:white;
+  font-size: 10px;
+  position: relative;
+  top:-1px;
+  color:#ff8600;
 }

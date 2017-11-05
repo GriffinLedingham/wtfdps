@@ -1,8 +1,9 @@
 <head>
   <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <script src="/scripts/sim.js"></script>
 </head>
-<body>
+<body onload="onLoad();">
   <div class="sim">
     <div class="simTitle">
       My DPS is...
@@ -16,11 +17,48 @@
           </div>
           <div class="dpsSubText">
             <div class="dpsText">DPS</div>
-            <div class="dpsPlusMin">(+/- 1.5%)</div>
+            <div class="dpsPlusMin">(+/- 1%)</div>
           </div>
+        </div>
+      </div>
+      <div class="gearTitle">WTF AM I WEARING?</div>
+      <div class="gearWrapper">
+        {{#gear}}
+          <div class="gearItem" data-item="{{data}}" data-id="{{id}}">
+            <div class="itemThumbWrapper">
+              <div class="itemThumbWrapperGloss" onmouseover="hoverItem('{{id}}');" onmouseout="hoverItem('{{id}}');"></div>
+              <div id="thumb{{id}}" class="gearItemThumb" ></div>
+            </div>
+            <div id="{{id}}" class="gearItemTooltip"></div>
+          </div>
+        {{/gear}}
+      </div>
+
+      <div class="gearTitle">WTF AM I PLAYING?</div>
+      <div class="gearWrapper">
+        {{#talents}}
+          <div class="talentItem" data-spellid="{{spell_id}}">
+            <div class="itemThumbWrapper">
+              <div class="itemThumbWrapperGloss" onmouseover="hoverItem('{{spell_id}}');" onmouseout="hoverItem('{{spell_id}}');"></div>
+              <div id="thumb{{spell_id}}" class="gearItemThumb" ></div>
+            </div>
+            <div id="{{spell_id}}" class="talentItemTooltip"></div>
+          </div>
+        {{/talents}}
+      </div>
+
+      <div class="gearTitle">WTF DO I OPEN WITH?</div>
+      <div class="rotationWrapper">
+        <div class="rotationString">
+          {{#opener}}
+            <span class="rotationItem">
+            {{spell}} {{^last}}<span class="rotationArrow">➔</span>{{/last}}
+            </span>
+          {{/opener}}
         </div>
       </div>
       {{/simData}}
     </div>
   </div>
+  <link rel="stylesheet" type="text/css" href="/css/tooltip.css"/>
 </body>
