@@ -10,7 +10,15 @@ function onLoad() {
   submitButton.addEventListener('click', function(e) {
     var charIn = document.getElementById('characterInput')
     var realmIn = document.getElementById('realmInput')
-    window.location.href = '/sim/'+document.region+'/'+realmIn.value.toLowerCase().replace(/ /g, '-')+'/'+charIn.value.toLowerCase();
+    var url = ''
+    url += '/sim/'+document.region
+    if(realmIn.value != '') {
+      url += '/' + realmIn.value.toLowerCase().replace(/ /g, '-')
+    }
+    if(charIn.value != '') {
+      url += '/' + charIn.value.toLowerCase()
+    }
+    window.location.href = url
   })
 
   document.body.onclick = function(e){
@@ -28,7 +36,12 @@ function onLoad() {
 
 function realmInput() {
   var elem = document.getElementById('realmInput')
-  var filtered = realms['us'].filter(function (str) { return str.indexOf(elem.value.toLowerCase()) !== -1 || str.indexOf(elem.value.toLowerCase().replace(/ /g, '-')) !== -1; })
+  var filtered;
+  if(document.region == 'eu') {
+    filtered = realms['eu'].filter(function (str) { return str.indexOf(elem.value.toLowerCase()) !== -1 || str.indexOf(elem.value.toLowerCase().replace(/ /g, '-')) !== -1; })
+  } else {
+    filtered = realms['us'].filter(function (str) { return str.indexOf(elem.value.toLowerCase()) !== -1 || str.indexOf(elem.value.toLowerCase().replace(/ /g, '-')) !== -1; })
+  }
   var ddText = ''
   for(var i in filtered) {
     ddText += '<div class="realmItem" data-id="'+filtered[i]+'">'+filtered[i].replace(/-/g, ' ')+'</div>'

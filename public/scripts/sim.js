@@ -1,6 +1,7 @@
 function onLoad() {
   processGear()
   processTalents()
+  processOpener()
 }
 function processGear() {
   var gear = document.querySelectorAll('.gearItem');
@@ -17,7 +18,6 @@ function processGear() {
     jsonp('https://www.wowdb.com/items/'+itemId+'/tooltip?bonusIDs='+bonusId, function(data) {
       var img = data.Tooltip.match(/src=\"(.+)\.jpg/)
       if(img != null) {
-        console.log(img)
         document.getElementById('thumb'+slotId).innerHTML = '<img src="'+img[1]+'.jpg" />'
       }
       document.getElementById(slotId).innerHTML = data.Tooltip
@@ -33,10 +33,25 @@ function processTalents() {
     jsonp('https://www.wowdb.com/spells/'+talentId+'/tooltip', function(data) {
       var img = data.Tooltip.match(/src=\"(.+)\.jpg/)
       if(img != null) {
-        console.log(img)
         document.getElementById('thumb'+talentId).innerHTML = '<img src="'+img[1]+'.jpg" />'
       }
       document.getElementById(talentId).innerHTML = data.Tooltip
+    })
+
+  })
+}
+
+function processOpener() {
+  var spells = document.querySelectorAll('.spellItem');
+  Array.prototype.forEach.call(spells, function(e, index) {
+    var spellId = e.getAttribute('data-spellid')
+    var spellIndex = e.getAttribute('data-index')
+    jsonp('https://www.wowdb.com/spells/'+spellId+'/tooltip', function(data) {
+      var img = data.Tooltip.match(/src=\"(.+)\.jpg/)
+      if(img != null) {
+        document.getElementById('thumb'+spellId+spellIndex).innerHTML = '<img src="'+img[1]+'.jpg" />'
+      }
+      document.getElementById(spellId+spellIndex).innerHTML = data.Tooltip
     })
 
   })

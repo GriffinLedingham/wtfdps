@@ -2,9 +2,24 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="/css/style.css">
   <script src="/scripts/sim.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta charset="utf-8">
+  <meta name="Description" CONTENT="Find out WTF kind of DPS your chataracter should put out.">
+  <title>{{simData.characterName}} | {{simData.realmName}} | WTFDPS</title>
+
+  <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/favicon/manifest.json">
+  <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
 </head>
 <body onload="onLoad();">
   <div class="sim">
+    <div class="backButtonWrapper">
+      <a class="backButton" href="/">◀ BACK</a>
+    </div>
     <div class="simTitle">
       My DPS is...
     </div>
@@ -17,7 +32,6 @@
           </div>
           <div class="dpsSubText">
             <div class="dpsText">DPS</div>
-            <div class="dpsPlusMin">(+/- 1%)</div>
           </div>
         </div>
       </div>
@@ -51,9 +65,21 @@
       <div class="rotationWrapper">
         <div class="rotationString">
           {{#opener}}
-            <span class="rotationItem">
-            {{spell}} {{^last}}<span class="rotationArrow">➔</span>{{/last}}
-            </span>
+            {{#spell_num}}
+              <div class="spellItem" data-spellid="{{../spell_num}}" data-index="{{../index}}">
+                <div class="itemThumbWrapper">
+                  <div class="itemThumbWrapperGloss" onmouseover="hoverItem('{{../spell_num}}{{../index}}');" onmouseout="hoverItem('{{../spell_num}}{{../index}}');"></div>
+                  <div id="thumb{{../spell_num}}{{../index}}" class="gearItemThumb" ></div>
+                </div>
+                <div id="{{../spell_num}}{{../index}}" class="spellItemTooltip"></div>
+              </div>
+              {{^../last}}<span class="rotationArrow">➔</span>{{/../last}}
+            {{/spell_num}}
+            <!-- {{^spell_num}}
+              <span class="rotationItem">
+              {{spell}} {{^../last}}<span class="rotationArrow">➔</span>{{/../last}}
+              </span>
+            {{/spell_num}} -->
           {{/opener}}
         </div>
       </div>

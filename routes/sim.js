@@ -4,7 +4,7 @@ const simManager  = require( '../classes/sim/SimManager' )
 module.exports = (app) => {
   let routes = express.Router()
 
-  routes.get('/:region/:realmName/:characterName', (req,res,next) => {
+  routes.get('/:region?/:realmName?/:characterName?', (req,res,next) => {
     if(req.params.region && req.params.characterName && req.params.realmName) {
       let props = {
         region:         req.params.region,
@@ -21,8 +21,8 @@ module.exports = (app) => {
       .then(data => {
         let templateData = {simData: simManager.formatSimData(data)}
 
-        templateData.simData.characterName = props.characterName
-        templateData.simData.realmName = props.realmName
+        templateData.simData.characterName = props.characterName.toUpperCase()
+        templateData.simData.realmName = props.realmName.replace(/-/g, ' ').toUpperCase()
 
         if(props.region == 'us') {
           templateData.simData.isUS = true
@@ -30,14 +30,28 @@ module.exports = (app) => {
           templateData.simData.isEU = true
         }
 
-        handlebars('sim', templateData)
+        return templateData
+      })
+      .then(templateData => {
+        return handlebars('sim', templateData)
+      })
+      .then(html => {
+        res.send(html)
+        res.end()
+      })
+      .catch(e => {
+        handlebars('home', {error:{msg: 'WTF. Something went wrong. Check information and try again.'}})
         .then(html => {
           res.send(html)
           res.end()
         })
       })
     } else {
-      res.end()
+      handlebars('home', {error:{msg: 'WTF. Something went wrong. Check information and try again.'}})
+      .then(html => {
+        res.send(html)
+        res.end()
+      })
     }
   })
 

@@ -32,6 +32,8 @@ body {
   vertical-align: top;
   margin: auto;
   margin-top: 30px;
+  margin-left: 2.5px;
+  margin-right: 2.5px;
 }
 
 .realmInputWrapper {
@@ -86,51 +88,51 @@ body {
   line-height: 46px;
   font-size: 30px;
   font-family: 'Roboto Condensed';
-  background: rgba(0,0,0,0.3);
-  border-radius: 6px;
-  border: 1px solid #131313;
-  box-shadow: inset 0px 0px 4px 1px rgba(0,0,0,0.1);
   color: white;
   text-align: center;
   outline: none !important;
   position: relative;
-  width: 702px;
   margin: auto;
   display: block;
-  margin-top: 10px;
 }
 
 .usItem {
   display: inline-block;
-  width: 50%;
+  width: 350px;
   color:#757575;
   box-sizing: border-box;
+  background: rgba(0,0,0,0.3);
   border: 1px solid #131313;
-  border-right: 1px solid rgba(128, 128, 128, 0.27);
+    box-shadow: inset 0px 0px 4px 1px rgba(0,0,0,0.1);
   box-sizing: border-box;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
+  border-radius: 6px;
   padding-top: 8px;
   padding-bottom: 8px;
   cursor: pointer;
+  margin-left: 2.5px;
+  margin-right: 2.5px;
+  margin-top: 30px;
 }
 
 .euItem {
   display: inline-block;
-  width: 50%;
+  width: 350px;
   color:#757575;
   border: 1px solid #131313;
+  background: rgba(0,0,0,0.3);
+    box-shadow: inset 0px 0px 4px 1px rgba(0,0,0,0.1);
   box-sizing: border-box;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
+  border-radius: 6px;
   padding-top: 8px;
   padding-bottom: 8px;
   cursor: pointer;
+  margin-left: 2.5px;
+  margin-right: 2.5px;
+  margin-top: 30px;
 }
 
 .usItem.selected, .usItem:hover, .euItem.selected, .euItem:hover {
   color: white;
-  border: solid 1px white;
   cursor: initial;
 }
 
@@ -165,13 +167,6 @@ body {
   margin-top: 45px;
 }
 
-
-.mainInput[input]:not([value=""]),
-.charInput:not([value=""]),
-{
-  border: 1px solid white;
-}
-
 .dpsText {
   font-size: 40px;
   font-family: 'Roboto Condensed';
@@ -185,7 +180,7 @@ body {
   font-family: 'Roboto Condensed';
   font-weight: bold;
   text-align: left;
-  padding-left: 200px;
+  margin-left: 30px;
   box-sizing: border-box;text-transform: uppercase;
 }
 
@@ -208,7 +203,7 @@ body {
   font-weight: bold;
   color: #ff8600;
   text-align: center;
-  margin-top: 45px;
+  margin-top:15;
 }
 
 .dpsSubText {
@@ -235,14 +230,19 @@ body {
   box-shadow: inset 0 0 5px 2px white;
 }
 
-.gearItem, .talentItem {
+.gearItem, .talentItem, .spellItem {
   display: inline-block;
   position: relative;
   margin-left: 4px;
   margin-right: 4px;
 }
 
-.gearItemTooltip, .talentItemTooltip {
+.spellItem {
+  top:11px;
+  position: relative;
+}
+
+.talentItemTooltip {
   display:none;
   position: absolute;
   top: 40px;
@@ -251,7 +251,25 @@ body {
   z-index: 2;
 }
 
-.gearItemTooltip.show, .talentItemTooltip.show {
+.gearItemTooltip {
+  display:none;
+  position: absolute;
+  top: -200px;
+  left:50px;
+  text-align: left;
+  z-index: 2;
+}
+
+.spellItemTooltip {
+  display:none;
+  position: absolute;
+  bottom: 30px;
+  left:0;
+  text-align: left;
+  z-index: 2;
+}
+
+.gearItemTooltip.show, .talentItemTooltip.show, .spellItemTooltip.show {
   display:block;
 }
 
@@ -314,5 +332,58 @@ body {
   font-size: 10px;
   position: relative;
   top:-1px;
-  color:#ff8600;
+  vertical-align: middle;
+}
+
+#simError {
+  margin-top: 30px;
+  color: #ff8600;
+  font-family: 'Roboto Condensed';
+  text-transform: uppercase;
+}
+
+.backButton {
+  font-size:20px;
+  vertical-align: top;
+  font-family: 'Roboto Condensed';
+  text-decoration: none !important;
+  color: white;
+  background: rgba(0,0,0,0.3);
+  border-radius: 6px;
+  border: 1px solid #131313;display: inline-block;
+  padding: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+
+}
+
+.backButtonWrapper {
+  margin-bottom: 20px;
+  text-align: left;
+  padding-left: 30px;
+}
+
+.simCharacterName {
+  color:white;
+  font-family: 'Roboto Condensed';
+  text-transform: uppercase;
+  font-size: 36px;
+  margin-top: 30px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 6px;
+  border: 1px solid #131313;
+  padding: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  display: inline-block;
+}
+
+@media (max-width: 725px) {
+  .titleHeader {
+    font-size: 80px;
+  }
+
+  .app {
+    padding-top:50px;
+  }
 }

@@ -50,7 +50,7 @@ module.exports = (() => {
     let returnActions = []
     let actions = data.slice(0,10)
     for (let [key, value] of entries(actions)) {
-      let openerItem = {spell: value.name.replace(/_/g, ' ')}
+      let openerItem = {spell: value.name.replace(/_/g, ' '), index: key}
       let spell_id = spells[openerItem.spell]
       if(spell_id) openerItem.spell_num = spell_id
       if(key == actions.length-1) {
