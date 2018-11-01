@@ -9,10 +9,12 @@ module.exports = (() => {
   this.queueSim = (props, options = {}) => {
     let guid = newGUID()
     simQueue.push({id: guid, props: props, options: options})
-    return guid
+    return getPromise(guid)
   }
 
   this.checkQueue = () => {
+    console.log("Active Workers: " + activeWorkers)
+    console.log("Queue Length: " + simQueue.length)
     if(activeWorkers < 3 && simQueue.length > 0) {
       let job = simQueue.shift()
       activeWorkers += 1

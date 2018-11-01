@@ -19,16 +19,7 @@ module.exports = (app) => {
 
       simManager.queueSim(props, options)
       .then(id => {
-        // Poll to wait for results to arrive
-        let promise = new Promise((resolve, reject) => {
-          setTimeout(() => {
-            let simResult = simManager.checkSimResults(id)
-            if(simResult !== false) {
-              resolve(simResult)
-            }
-          }, 2000)
-        });
-        return await promise
+        return checkResults(id)
       })
       .then(data => {
         let templateData = {simData: simManager.formatSimData(data)}
@@ -68,4 +59,20 @@ module.exports = (app) => {
   })
 
   return routes
+}
+
+async function checkResults(id) {
+  // Poll to wait for results to arrive
+  let promise = new Promise((resolve, reject) => {
+    let checkInterval = setInterval(() => {
+      let simResult = simManager.checkSimResults(id)
+      if(simResult !== false) {
+        clearInterval(checkInterval)
+        resolve(simResult)
+      }
+    }, 2000)
+  });
+
+  let promiseResult = await promise
+  return promiseResult
 }
