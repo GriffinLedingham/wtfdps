@@ -13,17 +13,13 @@ module.exports = (() => {
   }
 
   this.checkQueue = () => {
-    console.log('Active Workers: ' + activeWorkers)
-    console.log('Queue Length: ' + simQueue.length)
     if(activeWorkers < 3 && simQueue.length > 0) {
       let job = simQueue.shift()
       activeWorkers += 1
-      console.log('Sim worker started.')
       this.simCharacter(job.props, job.options)
       .then(data => {
         simResults[job.id] = data
         activeWorkers -= 1
-        console.log('Sim results collected.')
       })
     }
   }
