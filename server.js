@@ -10,6 +10,6 @@ global.simResults     = {}
 
 setInterval(()=>{
   simManager.checkQueue()
-},1000)
+},100)
 
 app.listen(3001, () => {console.log('Worker started.')})

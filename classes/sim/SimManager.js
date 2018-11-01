@@ -13,13 +13,17 @@ module.exports = (() => {
   }
 
   this.checkQueue = () => {
+    console.log('Active Workers: ' + activeWorkers)
+    console.log('Queue Length: ' + simQueue.length)
     if(activeWorkers < 3 && simQueue.length > 0) {
       let job = simQueue.shift()
       activeWorkers += 1
+      console.log('Sim worker started.')
       this.simCharacter(job.props, job.options)
       .then(data => {
         simResults[job.id] = data
         activeWorkers -= 1
+        console.log('Sim results collected.')
       })
     }
   }
@@ -35,12 +39,13 @@ module.exports = (() => {
   this.simCharacter = (props, options = {}) => {
     const { region, realmName, characterName } = props
     let timestamp       = Math.floor( Date.now() / 1000 )
+    let outputGUID = newGUID()
 
     let simCall  = '../simc/engine/simc '
     simCall     += `armory=${region},`
     simCall     += `${realmName},`
     simCall     += `${characterName} `
-    simCall     += `json2=./output/${region}${characterName}${realmName}${timestamp}.json `
+    simCall     += `json2=./output/${outputGUID}.json `
 
     for (let [key, value] of entries(options)) {
       simCall   += `${key}=${value} `
@@ -48,11 +53,11 @@ module.exports = (() => {
 
     return getAsync(simCall)
     .then(data => {
-      let jsonData = require(`../../output/${region}${characterName}${realmName}${timestamp}.json`)
+      let jsonData = require(`../../output/${outputGUID}.json`)
       return jsonData
     })
     .then(data => {
-      return unlink(path.join(__dirname, `../../output/${region}${characterName}${realmName}${timestamp}.json`))
+      return unlink(path.join(__dirname, `../../output/${outputGUID}.json`))
       .then(()=> {
         return data
       })
