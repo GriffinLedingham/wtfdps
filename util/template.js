@@ -6,7 +6,7 @@ const enableCaching = false
 
 module.exports = (()=>{
   global.templates = {}
-  global.handlebars = (filename, data) => {
+  global.handlebars = async function(filename, data) {
     if(enableCaching && templates[filename]) {
       return getPromise(templates[filename](data))
     } else {

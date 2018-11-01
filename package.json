@@ -4,6 +4,8 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "blocked": "^1.2.1",
+    "blocked-at": "^1.1.2",
     "bluebird": "^3.5.1",
     "express": "^4.16.2",
     "handlebars": "^4.0.11",

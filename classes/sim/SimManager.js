@@ -13,12 +13,10 @@ module.exports = (() => {
   }
 
   this.checkQueue = () => {
-    console.log("Active Workers: " + activeWorkers)
-    console.log("Queue Length: " + simQueue.length)
     if(activeWorkers < 3 && simQueue.length > 0) {
       let job = simQueue.shift()
       activeWorkers += 1
-      this.simCharacter(job.props, job.id, job.options)
+      this.simCharacter(job.props, job.options)
       .then(data => {
         simResults[job.id] = data
         activeWorkers -= 1
@@ -27,14 +25,14 @@ module.exports = (() => {
   }
 
   this.checkSimResults = (id) => {
-    let result = false 
+    let result = false
     if(simResults[id] != undefined) {
       result = simResults[id]
     }
     return result
   }
 
-  this.simCharacter = (props, id, options = {}) => {
+  this.simCharacter = (props, options = {}) => {
     const { region, realmName, characterName } = props
     let timestamp       = Math.floor( Date.now() / 1000 )
 
