@@ -17,7 +17,19 @@ module.exports = (app) => {
         iterations: 100
       }
 
-      simManager.simCharacter(props, options)
+      simManager.queueSim(props, options)
+      .then(id => {
+        // Poll to wait for results to arrive
+        let promise = new Promise((resolve, reject) => {
+          setTimeout(() => {
+            let simResult = simManager.checkSimResults(id)
+            if(simResult !== false) {
+              resolve(simResult)
+            }
+          }, 2000)
+        });
+        return await promise
+      })
       .then(data => {
         let templateData = {simData: simManager.formatSimData(data)}
 

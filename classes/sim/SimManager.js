@@ -5,9 +5,34 @@ const getAsync  = Promise.promisify(cmd.get, { multiArgs: true, context: cmd })
 const unlink    = Promise.promisify(require("fs").unlink)
 const spells    = require( '../../data/spells.json')
 
-
 module.exports = (() => {
-  this.simCharacter = (props, options = {}) => {
+  this.queueSim = (props, options = {}) => {
+    let guid = newGUID()
+    simQueue.push({id: guid, props: props, options: options})
+    return guid
+  }
+
+  this.checkQueue = () => {
+    if(activeWorkers < 3 && simQueue.length > 0) {
+      let job = simQueue.shift()
+      activeWorkers += 1
+      this.simCharacter(job.props, job.id, job.options)
+      .then(data => {
+        simResults[job.id] = data
+        activeWorkers -= 1
+      })
+    }
+  }
+
+  this.checkSimResults = (id) => {
+    let result = false 
+    if(simResults[id] != undefined) {
+      result = simResults[id]
+    }
+    return result
+  }
+
+  this.simCharacter = (props, id, options = {}) => {
     const { region, realmName, characterName } = props
     let timestamp       = Math.floor( Date.now() / 1000 )
 
